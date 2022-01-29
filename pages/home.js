@@ -9,14 +9,14 @@ export default function Home() {
   const debounce = (func) => {
     let timer;
     return function (...args) {
-        const context = this;
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
         timer = null;
         func.apply(context, args);
-        }, 500);
+      }, 500);
     };
-};
+  };
 
   const handleChange = (el) => {
     if (el.target.value !== "") {
@@ -25,7 +25,6 @@ export default function Home() {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           let temp = data.filter((e) =>
             e.name.toLowerCase().includes(el.target.value.trim().toLowerCase())
           );
@@ -36,7 +35,7 @@ export default function Home() {
     }
   };
 
-  const optimizedSearch = React.useMemo(()=>debounce(handleChange), []);
+  const optimizedSearch = React.useMemo(() => debounce(handleChange), []);
 
   return (
     <>
@@ -63,7 +62,9 @@ export default function Home() {
           />
         </div>
         <div className="overflow-y-scroll max-h-60 bg-cyan-100">
-          {queryData.map((e)=><Coin key={e.id} data={e} />)}
+          {queryData.map((e) => (
+            <Coin key={e.id} data={e} />
+          ))}
         </div>
       </div>
     </>

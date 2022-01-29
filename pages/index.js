@@ -21,7 +21,10 @@ export default function Login() {
   React.useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
-        router.push("/home");
+        router.push({
+          pathname: "/home",
+          query: { uid: currentUser.uid },
+        });
       }
     });
   }, []);
@@ -44,8 +47,10 @@ export default function Login() {
       signInWithEmailAndPassword(auth, email, password)
         .then((res) => {
           alert("User is successfully logged");
-          localStorage.setItem("user", JSON.stringify(res.user.uid));
-          router.push("/home");
+          router.push({
+            pathname: "/home",
+            query: { uid: res.user.uid },
+          });
         })
         .catch((err) => {
           setUser({ email: "", password: "" });
@@ -55,8 +60,10 @@ export default function Login() {
       createUserWithEmailAndPassword(auth, email, password)
         .then((res) => {
           alert("User is successfully signup");
-          localStorage.setItem("user", JSON.stringify(res.user.uid));
-          router.push("/home");
+          router.push({
+            pathname: "/home",
+            query: { uid: res.user.uid },
+          });
         })
         .catch((err) => {
           alert(err.message);

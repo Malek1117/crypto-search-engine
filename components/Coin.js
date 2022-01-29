@@ -1,10 +1,12 @@
 import React from "react";
 import { db } from "../config/firebase";
 import { ref, set, get, child, remove } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 export default function Coin({ data }) {
   const [status, setStatus] = React.useState(false);
-  const userUUID = JSON.parse(localStorage.getItem("user"));
+  const auth = getAuth();
+  const userUUID = auth.currentUser.uid;
 
   const handleClick = (flag) => {
     if (flag) {
@@ -38,7 +40,7 @@ export default function Coin({ data }) {
         <p>₹ {data.current_price.toLocaleString()} /-</p>
         <button
           className="bg-cyan-600 text-white font-bold px-3 py-1 rounded-lg"
-          onClick={() => handleClick()}
+          onClick={() => handleClick(status)}
         >
           {status ? "Remove" : "Add to Fav"}
         </button>
